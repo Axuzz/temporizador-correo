@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Correo Electrónico con Temporizador</title>
+    <style>
+        #temporizador {
+            font-size: 34px;
+            text-align: center;
+            margin-top: 30px;
+            color: #ffffff;
+        }
+
+        .circulo {
+            width: 70px;
+            height: 70px;
+            line-height: 70px;
+            border-radius: 50%;
+            border: 2px solid #10d100;
+            display: inline-block;
+            margin: 0 10px;
+        }
+    </style>
+</head>
+<body>
+    <!-- Temporizador -->
+    <div id="temporizador">
+        <span class="circulo" id="dias"></span>
+        <span class="circulo" id="horas"></span>
+        <span class="circulo" id="minutos"></span>
+        <span class="circulo" id="segundos"></span>
+    </div>
+
+    <script>
+        // Establecer la fecha límite (21 de noviembre de 2023)
+        const fechaLimite = new Date("November 21, 2023 00:00:00 GMT-0500");
+
+        // Actualizar el temporizador cada segundo
+        const intervalo = setInterval(actualizarTemporizador, 1000);
+
+        function actualizarTemporizador() {
+            // Obtener la fecha y hora actual
+            const ahora = new Date().getTime();
+
+            // Calcular la diferencia entre la fecha límite y la fecha actual
+            const diferencia = fechaLimite - ahora;
+
+            // Calcular días, horas, minutos y segundos restantes
+            const dias = Math.floor(diferencia / (1000 * 60 * 60 * 24));
+            const horas = Math.floor((diferencia % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutos = Math.floor((diferencia % (1000 * 60 * 60)) / (1000 * 60));
+            const segundos = Math.floor((diferencia % (1000 * 60)) / 1000);
+
+            // Mostrar el temporizador en la página
+            document.getElementById('dias').innerHTML = `${dias}d`;
+            document.getElementById('horas').innerHTML = `${horas}h`;
+            document.getElementById('minutos').innerHTML = `${minutos}m`;
+            document.getElementById('segundos').innerHTML = `${segundos}s`;
+
+            // Si la cuenta regresiva ha terminado, limpiar el intervalo
+            if (diferencia < 0) {
+                clearInterval(intervalo);
+                document.getElementById('temporizador').innerHTML = '<span class="circulo">¡Tiempo terminado!</span>';
+            }
+        }
+    </script>
+</body>
+</html>
